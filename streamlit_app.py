@@ -1,24 +1,21 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
 import matplotlib.pyplot as plt
 from sksurv.ensemble import RandomSurvivalForest
 from scipy.stats import randint
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.utils import resample
-# import joblib
 import pickle
 
+# 检查并下载 Git LFS 文件
+if not os.path.exists("rsf_model3.pkl"):
+    os.system("git lfs pull")  # 确保 Git LFS 下载模型
 
 # 定义一个函数用于预测和展示结果
 # ========== 预测新患者的生存曲线 ==========
 def predict_survival(new_patient, target_time):
     """ 使用已训练好的 RSF 模型预测新患者的生存曲线，并计算置信区间 """
-    # 加载模型
-    # rsf = joblib.load('rsf_model.pkl')
-    # X_train = joblib.load('X_train.pkl')
-    # train_yt_merge_y = joblib.load('train_yt_merge_y.pkl')
 
     with open('rsf_model3.pkl', 'rb') as f:
         rsf = pickle.load(f)
